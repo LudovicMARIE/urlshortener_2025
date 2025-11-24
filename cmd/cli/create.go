@@ -78,8 +78,8 @@ Exemple:
 
 		// TODO : Appeler le LinkService et la fonction CreateLink pour créer le lien court.
 		// os.Exit(1) si erreur
-		link, isLinkCreated := linkService.CreateLink(longURLFlag)
-		if isLinkCreated != nil {
+		link, err := linkService.CreateLink(longURLFlag)
+		if err != nil {
 			log.Fatalf("‼️  Erreur lors de la création de l'URL courte: %v", err)
 			os.Exit(1)
 		}
