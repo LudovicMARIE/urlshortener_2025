@@ -9,6 +9,7 @@ import (
 	"github.com/axellelanca/urlshortener/internal/config"
 	"github.com/axellelanca/urlshortener/internal/models"
 	"github.com/axellelanca/urlshortener/internal/services"
+	"github.com/cilium/ebpf/link"
 	"github.com/gin-gonic/gin"
 	"gorm.io/gorm" // Pour gérer gorm.ErrRecordNotFound
 )
@@ -90,16 +91,15 @@ func CreateShortLinkHandler(linkService *services.LinkService) gin.HandlerFunc {
 func RedirectHandler(linkService *services.LinkService) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// Récupère le shortCode de l'URL avec c.Param
-		shortCode :=
+		shortCode := c.Param("shortCode")
 
 		// TODO 2: Récupérer l'URL longue associée au shortCode depuis le linkService (GetLinkByShortCode)
-
+		link, err := linkService.GetLinkByShortCode(shortCode)
 		if err != nil {
 			// Si le lien n'est pas trouvé, retourner HTTP 404 Not Found.
 			// Utiliser errors.Is et l'erreur Gorm
-			if  { // Utilisez errors.Is(err, gorm.ErrRecordNotFound) en production si l'erreur est wrappée
-
-				return
+			if  errors.Is(err, gorm.ErrRecordNotFound){ // Utilisez errors.Is(err, gorm.ErrRecordNotFound) en production si l'erreur est wrappée
+				returnc.JSON(http.StatusNotFound, gin.H{"error": "Link not found"})
 			}
 			// Gérer d'autres erreurs potentielles de la base de données ou du service
 			log.Printf("Error retrieving link for %s: %v", shortCode, err)
