@@ -11,10 +11,11 @@ import (
 // Les tags `mapstructure` sont utilisés par Viper pour mapper les clés du fichier de config
 // (ou des variables d'environnement) aux champs de la structure Go.
 type Config struct {
-	Server    ServerConfig    `mapstructure:"server"`
-	Database  DatabaseConfig  `mapstructure:"database"`
-	Analytics AnalyticsConfig `mapstructure:"analytics"`
-	Monitor   MonitorConfig   `mapstructure:"monitor"`
+	Server            ServerConfig      `mapstructure:"server"`
+	Database          DatabaseConfig    `mapstructure:"database"`
+	Analytics         AnalyticsConfig   `mapstructure:"analytics"`
+	Monitor           MonitorConfig     `mapstructure:"monitor"`
+	ClickWorkerConfig ClickWorkerConfig `mapstructure:"clickworker"`
 }
 
 type ServerConfig struct {
@@ -38,6 +39,10 @@ type AnalyticsConfig struct {
 type MonitorConfig struct {
 	Enabled         bool `mapstructure:"enabled"`
 	IntervalMinutes int  `mapstructure:"interval_minutes"`
+}
+type ClickWorkerConfig struct {
+	ChannelSize int `mapstructure:"channel_size"`
+	WorkerCount int `mapstructure:"worker_count"`
 }
 
 // LoadConfig charge la configuration de l'application en utilisant Viper.
