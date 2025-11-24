@@ -74,6 +74,7 @@ func LoadConfig() (*Config, error) {
 	viper.SetDefault("analytics.buffer_size", 100)
 	viper.SetDefault("monitor.enabled", true)
 	viper.SetDefault("monitor.interval_minutes", 5)
+	viper.SetDefault("clickworker.worker_count", 1)
 
 	// TODO : Lire le fichier de configuration.
 	if err := viper.ReadInConfig(); err != nil {

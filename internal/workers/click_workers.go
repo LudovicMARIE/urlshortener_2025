@@ -9,19 +9,19 @@ import (
 
 // StartClickWorkers lance un pool de goroutines "workers" pour traiter les événements de clic.
 // Chaque worker lira depuis le même 'clickEventsChan' et utilisera le 'clickRepo' pour la persistance.
-func StartClickWorkers(workerCount int, clickEventsChan <-chan models.ClickEvent, clickRepo repository.ClickRepository) {
+func StartClickWorkers(workerCount int, ClickEventsChannel <-chan models.ClickEvent, clickRepo repository.ClickRepository) {
 	log.Printf("Starting %d click worker(s)...", workerCount)
 	for i := 0; i < workerCount; i++ {
 		// Lance chaque worker dans sa propre goroutine.
 		// Le channel est passé en lecture seule (<-chan) pour renforcer l'immutabilité du channel à l'intérieur du worker.
-		go clickWorker(clickEventsChan, clickRepo)
+		go clickWorker(ClickEventsChannel, clickRepo)
 	}
 }
 
 // clickWorker est la fonction exécutée par chaque goroutine worker.
 // Elle tourne indéfiniment, lisant les événements de clic dès qu'ils sont disponibles dans le channel.
-func clickWorker(clickEventsChan <-chan models.ClickEvent, clickRepo repository.ClickRepository) {
-	for event := range clickEventsChan { // Boucle qui lit les événements du channel
+func clickWorker(ClickEventsChannel <-chan models.ClickEvent, clickRepo repository.ClickRepository) {
+	for event := range ClickEventsChannel { // Boucle qui lit les événements du channel
 		// TODO 1: Convertir le 'ClickEvent' (reçu du channel) en un modèle 'models.Click'.
 		click := &models.Click{
 			LinkID:    event.LinkID,
