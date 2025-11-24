@@ -80,7 +80,7 @@ func CreateShortLinkHandler(linkService *services.LinkService) gin.HandlerFunc {
 		// Retourne le code court et l'URL longue dans la réponse JSON.
 		// TODO Choisir le bon code HTTP
 		c.JSON(http.StatusOK, gin.H{
-			"short_code":     link.ShortCode,
+			"short_code":     link.Shortcode,
 			"long_url":       link.LongURL,
 			"full_short_url": config.Config.Server.base_url + "/" + link.ShortCode, // TODO: Utiliser cfg.Server.BaseURL ici
 		})
@@ -135,7 +135,7 @@ func GetLinkStatsHandler(linkService *services.LinkService) gin.HandlerFunc {
 
 		// Retourne les statistiques dans la réponse JSON.
 		c.JSON(http.StatusOK, gin.H{
-			"short_code":   link.ShortCode,
+			"short_code":   link.Shortcode,
 			"long_url":     link.LongURL,
 			"total_clicks": totalClicks,
 		})

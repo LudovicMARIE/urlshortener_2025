@@ -95,7 +95,7 @@ func (s *LinkService) CreateLink(longURL string) (*models.Link, error) {
 	// TODO Crée une nouvelle instance du modèle Link.
 	link := &models.Link{
 		LongURL:   longURL,
-		ShortCode: shortCode,
+		Shortcode: shortCode,
 	}
 
 	// TODO Persiste le nouveau lien dans la base de données via le repository (CreateLink)

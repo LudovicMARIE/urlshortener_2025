@@ -63,7 +63,7 @@ func (m *UrlMonitor) checkUrls() {
 		// Si c'est la première vérification pour ce lien, on initialise l'état sans notifier.
 		if !exists {
 			log.Printf("[MONITOR] État initial pour le lien %s (%s) : %s",
-				link.ShortCode, link.LongURL, formatState(currentState))
+				link.Shortcode, link.LongURL, formatState(currentState))
 			continue
 		}
 
